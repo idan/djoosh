@@ -7,6 +7,7 @@ The djoosh project lives at http://github.com/idangazit/djoosh/.
 
 .. _Djoosh: http://github.com/idangazit/djoosh/
 
+
 Project Goals
 -------------
 
@@ -38,15 +39,18 @@ Wishlist
 * Once the basic indexing solution is working, maybe include a django application that provides an HTTP interface to a djoosh. This will allow you to separate the djoosh indexing service from the django appserver, and make it available to more than one django server via the network.
 * Peace on earth and goodwill towards men.
 
+
 Architecture
 ============
 
 This is a big fat TODO. We've captured some ideas on paper and worked out a basic design, we'll fill this one once we've fleshed the project out a bit.
 
+
 Usage
 =====
 
 *See: Architecture.*
+
 
 Meta
 ====
