@@ -31,7 +31,6 @@ class SearchEngine(object):
 
         If a model is already registered, this will raise AlreadyRegistered.
         """
-        
         if not search_class:
             search_class = ModelSearch
         if isinstance(model_or_iterable, ModelBase):
@@ -39,7 +38,6 @@ class SearchEngine(object):
         for model in model_or_iterable:
             if model in self._registry:
                 raise AlreadyRegistered('The model %s is already registered' % model.__name__)
-            
             # If we got **options then dynamically construct a subclass of
             # search_class with those **options.
             if options:
@@ -47,11 +45,10 @@ class SearchEngine(object):
                 # the created class appears to "live" in the wrong place,
                 # which causes issues later on.
                 options['__module__'] = __name__
-                search_class = type("%sSearch" % model.__name__, (search_class,), options)
-            
+                search_class = type("%sSearch" % model.__name__, (search_class,), options)            
             self._registry[model] = search_class(model, self)
-            
             # TODO: make sure that signals are attached
+            
 
     def unregister(self, model_or_iterable):
         """
