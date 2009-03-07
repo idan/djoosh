@@ -1,2 +1,2 @@
-from djoosh.options import SearchAdmin
+from djoosh.options import ModelSearch
 from djoosh.engines import SearchEngine

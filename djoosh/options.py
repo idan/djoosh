@@ -47,7 +47,7 @@ class ModelSearch(object):
         """
         if db_field.__class__ in self.searchfield_overrides:
             pass # use any custom mappings specificed
-        elif db_field.__class in SEARCHFIELD_FOR_DBFIELDS_DEFAULTS
+        elif db_field.__class in SEARCHFIELD_FOR_DBFIELDS_DEFAULTS:
             pass # use the default mappings
         else:
             pass # raise an exception that this field could not be natively mapped.
