@@ -10,7 +10,7 @@ class NotRegistered(Exception):
     pass
 
 class SearchEngine(object):
-    
+
     def __init__(self, name=None):
         self._registry = {} # model_class class -> search_class instance
         if name is None:
@@ -45,15 +45,18 @@ class SearchEngine(object):
                 # the created class appears to "live" in the wrong place,
                 # which causes issues later on.
                 options['__module__'] = __name__
-                search_class = type("%sSearch" % model.__name__, (search_class,), options)            
+                search_class = type("%sSearch" % model.__name__, (search_class,), options)
             self._registry[model] = search_class(model, self)
-            # TODO: make sure that signals are attached
-            
+
+            # Attache post_save and post_delete signals
+            post_save.connect(self._registry[model].post_save_callback, sender=model)
+            post_delete.connect(self._registry[model].post_delete_callback, sender=model)
+
 
     def unregister(self, model_or_iterable):
         """
         Unregisters the given model(s).
-    
+
         If a model isn't already registered, this will raise NotRegistered.
         """
         if isinstance(model_or_iterable, ModelBase):
@@ -61,4 +64,8 @@ class SearchEngine(object):
         for model in model_or_iterable:
             if model not in self._registry:
                 raise NotRegistered('The model %s is not registered' % model.__name__)
+            # Detach the signals
+
+            post_save.disconnect(self._registry[model].post_save_callback, sender=model)
+            post_delete.disconnect(self._registry[model].post_delete_callback, sender=model)
             del self._registry[model]
